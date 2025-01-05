@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SnakeAndLadder.Domain.features
 {
-    public class BoardService 
+    public class BoardService : IBoardService
     {
         private readonly AppDbContext _db;
 
@@ -37,7 +37,7 @@ namespace SnakeAndLadder.Domain.features
             return Result<BoardResponseModel>.Success(response, "Board created successfully.");
         }
 
-        public async Task<Result<BoardResponseModel>> GetBoard(int boardId)
+        public async Task<Result<BoardResponseModel>> GetBoardById(int boardId)
         {
             Result<BoardResponseModel> model = new Result<BoardResponseModel>();
 
@@ -57,6 +57,22 @@ namespace SnakeAndLadder.Domain.features
             model = Result<BoardResponseModel>.Success(response, "Board found");
         Result: 
             return model;
+        }
+
+        public async Task<Result<BoardResponseModel>> GetBoards()
+        {
+            var boards = await _db.TblBoards.AsNoTracking().ToListAsync();
+            var response = new BoardResponseModel 
+            { 
+                Boards = boards.Select(board => new BoardResponseModel 
+                { 
+                    BoardId = board.BoardId, 
+                    Type = board.Type,
+                    Destination = board.Destination
+                }).ToList()
+            };
+
+            return Result<BoardResponseModel>.Success(response, "Boards retrieved successfully.");
         }
 
         public async Task<Result<BoardResponseModel>> UpdateBoard(int boardId, BoardRequestModel updatedBoard) 

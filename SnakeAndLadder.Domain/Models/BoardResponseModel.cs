@@ -11,5 +11,6 @@ namespace SnakeAndLadder.Domain.Models
         public int BoardId { get; set; }
         public string Type { get; set; } = null!;
         public string Destination { get; set; } = null!;
+        public List<BoardResponseModel> Boards { get; set; } = new List<BoardResponseModel>();
     }
 }
