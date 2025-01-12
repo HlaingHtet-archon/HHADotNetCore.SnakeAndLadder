@@ -9,6 +9,11 @@ namespace SnakeAndLadder.Domain.Models
 {
     public class GameplayRequestModel
     {
-        public TblGameplay TblGameplay { get; set; }
+        public string GameCode { get; set; } = null!;
+        public string PlayerCode { get; set; } = null!; 
+        public string PlayerColor { get; set; } = null!;
+        public string WinnerId { get; set; } = null!;
+        public string SecondPlaceId { get; set; } = null!; 
+        public string ThirdPlaceId { get; set; } = null!;
     }
 }
